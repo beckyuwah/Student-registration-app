@@ -109,19 +109,41 @@ WSGI_APPLICATION = 'registerApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 #CLOSE-FOR-DEPLOYMENT
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',         # Switch backend to MySQL
-        'NAME': 'django_db',                          # DB name (from docker-compose.yml)
-        'USER': 'django',                             # DB user (from docker-compose.yml)
-        'PASSWORD': 'django',                         # DB password (from docker-compose.yml)
-        'HOST': 'db',                                 # Service name in docker-compose
-        'PORT': '3306',                               # Default MySQL port
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+#for docker (open)
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+if os.getenv("USE_MYSQL", "0") == "1":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv("MYSQL_DATABASE", "django_db"),
+            'USER': os.getenv("MYSQL_USER", "django"),
+            'PASSWORD': os.getenv("MYSQL_PASSWORD", "django"),
+            'HOST': os.getenv("MYSQL_HOST", "db"),
+            'PORT': os.getenv("MYSQL_PORT", "3306"),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            }
         }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 #OPEN-FOR-DEPLOYMENT
 # DATABASES = {

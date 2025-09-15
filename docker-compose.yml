@@ -3,26 +3,33 @@ version: "3.9"
 services:
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/studentreg
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
+    environment:           
+      USE_MYSQL: "1"
+      MYSQL_DATABASE: django_db
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
 
   db:
     image: mysql:8.0
     restart: always
-    environment:
+    environment:           
       MYSQL_DATABASE: django_db
       MYSQL_USER: django
       MYSQL_PASSWORD: django
       MYSQL_ROOT_PASSWORD: rootpassword
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
 volumes:
   mysql_data:
