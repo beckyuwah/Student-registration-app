@@ -1,4 +1,28 @@
+#python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.pyc
 
-utility/
+#virtual environment
 myenv/
+
+#django
+/staticfiles/
+/media/
+*.pot
+
+#other files
+.ipynb_checkpoints
 .DS_Store
+.vscode/
+.env
+.idea/
+*.log
+**/tmp/
+data/
+*.db
+.git
+.dockerignore
+Dockerfile
+
