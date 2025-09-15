@@ -1,19 +1,28 @@
-
-utility/
-myenv/
-.DS_Store
-*.pyc
+#python
 __pycache__/
+*.py[cod]
+*.sqlite3
+*.pyc
+
+#virtual environment
+myenv/
+
+#django
+/staticfiles/
+/media/
+*.pot
+
+#other files
 .ipynb_checkpoints
+.DS_Store
 .vscode/
 .env
 .idea/
 *.log
+**/tmp/
 data/
-*.pyo
-*.pyd
 *.db
-*.sqlite3
 .git
 .dockerignore
 Dockerfile
+
