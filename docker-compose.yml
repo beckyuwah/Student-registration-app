@@ -6,24 +6,27 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    depends_on:
-      - db
-    environment:           
-      USE_MYSQL: "1"
-      MYSQL_DATABASE: django_db
-      MYSQL_USER: django
-      MYSQL_PASSWORD: django
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_HOST: db
       MYSQL_PORT: 3306
+    depends_on:
+      - db
 
   db:
     image: mysql:8.0
     restart: always
-    environment:           
-      MYSQL_DATABASE: django_db
-      MYSQL_USER: django
-      MYSQL_PASSWORD: django
-      MYSQL_ROOT_PASSWORD: rootpassword
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
